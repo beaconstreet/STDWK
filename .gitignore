@@ -2,8 +2,17 @@
 .env
 
 # Asset files
-/assets/
+**/assets/
+**/output/
+**/overlays/
 *.png
+*.csv
+
+# Environment variables
+.env
+
+# Other stuff
+.DS_Store
 
 # Build artifacts
 node_modules/
