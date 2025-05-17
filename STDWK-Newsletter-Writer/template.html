@@ -1,0 +1,338 @@
+<style>
+  * {
+    font-family: Helvetica, Arial, sans-serif;
+    color: #333;
+  }
+
+  body {
+    background-color: #29abe2;
+  }
+
+  .message-content {
+    max-width: 640px;
+    width: 100%;
+    margin: 30px auto;
+    background-color: #fff;
+    padding: 10px 0;
+    border-radius: 15px;
+  }
+
+  /* Handle tables which can often break layouts */
+  .message-content table {
+    width: 100% !important;
+    max-width: 100% !important;
+    table-layout: fixed !important;
+  }
+
+  .message-content div {
+    max-width: 600px;
+    width: 100%;
+    padding-bottom: 10px;
+    margin: 0 auto;
+    box-sizing: border-box; /* Important for mobile */
+  }
+
+  .message-content img {
+    max-width: 100%; /* Changed from fixed width */
+    display: block;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+    box-sizing: border-box;
+  }
+
+  .message-content a {
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    max-width: 100% !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  blockquote {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0px;
+    padding-right: 0px;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    /* Worth the drive section */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #f5a952;
+    font-size: 16px !important;
+    margin: 0 auto;
+    max-width: 100%;
+    object-fit: contain;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  h2 {
+    /* Headers for events */
+    font-size: 20px !important;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  h3 {
+    /*Generic centered text */
+    font-size: 20px;
+    max-width: 100%;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  h4 {
+    /* Location edition */
+    max-width: 80%;
+    padding-top: 15px;
+    font-size: 40px;
+    line-height: 1.2em;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration-line: underline overline;
+  }
+
+  h5 {
+    /* divider line */
+    border: 0;
+    height: 2px;
+    width: 80%;
+    background-color: #ededed;
+    margin: 40px auto;
+    text-align: center;
+  }
+
+  h6 {
+    /* top and bottom blurbs */
+    background-color: #c2c2c2;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 15px;
+    margin-right: 15px;
+    margin-left: 15px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5em;
+  }
+
+  p,
+  li,
+  ul,
+  ol,
+  div {
+    font-size: 18px;
+    line-height: 1.5em;
+    font-family: Helvetica, Arial, sans-serif;
+    color: #333333;
+  }
+
+  p {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  p *,
+  li * {
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  p,
+  ul,
+  ol {
+    margin-bottom: 1em;
+  }
+
+  blockquote {
+    background-color: #f7931e;
+    margin: 20px 0px;
+    border-radius: 15px;
+    padding: 15px 30px;
+  }
+
+  a:hover {
+    color: #1b8ede;
+    border-bottom-color: #1b8ede;
+  }
+
+  .padding-univ {
+    padding: 10px;
+  }
+
+  .button {
+    border: none;
+    background: #777;
+    color: #fff;
+    padding: 10px;
+    display: inline-block;
+    margin: 10px 0px;
+    font-family: Helvetica, Arial, sans-serif;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+  }
+
+  .button:hover {
+    color: #fff;
+    background: #666;
+  }
+
+  .footer {
+    border-top: 1px dotted #888;
+    padding: 20px 10px;
+    font-family: Helvetica, Arial, sans-serif;
+    color: #aaa;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .social-links {
+    margin-bottom: 10px;
+    padding: 0px;
+  }
+  .social-links a {
+    text-align: center;
+    padding: 5px;
+    border: none;
+  }
+
+  /* Add media query for mobile */
+  @media screen and (max-width: 480px) {
+    h1 {
+      font-size: 14px !important;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    .message-content {
+      margin: 10px auto;
+      padding: 15px 0;
+    }
+
+    .message-content div,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    blockquote {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    h1 {
+      font-size: 12px !important;
+    }
+
+    h6 {
+      margin-right: 5px;
+      margin-left: 5px;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+
+  @media screen and (max-width: 320px) {
+    h1 {
+      font-size: 12px !important;
+    }
+  }
+</style>
+<!--[if mso]>
+  <center>
+  <table><tr><td width="580">
+  <![endif]-->
+<div style="background-color: #29abe2; padding-bottom: 30px">
+  <div
+    style="
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('https://images.unsplash.com/photo-1621354598022-16599af1b8b2')
+        no-repeat center center;
+      background-size: cover;
+      padding: 60px 20px;
+      color: white;
+      max-width: 600px;
+      margin: 0 auto;
+      border-radius: 0px 0px 10px 10px;
+      min-height: 200px;
+    "
+  >
+    <a
+      href="https://shittodowithkids.com"
+      style="position: absolute; top: 10px; right: 10px"
+    >
+      <img
+        src="https://embed.filekitcdn.com/e/td1rcuMSZVaQz7yk9R39Lj/8m62hLoThseCGbA4c3QtUW/email"
+        width="100"
+        height="auto"
+        style="
+          border-radius: 4px;
+          width: 164px;
+          height: auto;
+          object-fit: contain;
+        "
+      />
+    </a>
+  </div>
+
+  <div class="message-content">
+    {{ message_content }}
+
+    <p
+      style="
+        background-color: #29abe2;
+        padding: 15px 30px;
+        margin: 0 auto;
+        max-width: 100%;
+        object-fit: contain;
+        box-sizing: border-box;
+        border: 1px solid #fff;
+      "
+    >
+      📆 Have a fun event coming up for kids (and their parents being dragged
+      along)?
+      <a
+        href="https://forms.gle/Wr97tenrb7hMQ2oG6"
+        alt="Let us know!"
+        target="_blank"
+        >Let us know!</a
+      >
+      <br />
+      <br />
+      📨 Got forwarded this newsletter? Overcome with joy and ready to join in?
+      <a href="https://shittodowithkids.com/" target="_blank">Subscribe here</a>
+    </p>
+
+    <div class="footer">
+      <a href="{{ unsubscribe_url }}">Unsubscribe</a> |
+      <a href="{{ subscriber_preferences_url }}">Update your profile</a> | {{
+      address }}
+    </div>
+  </div>
+</div>
+<!--[if mso]>
+  </td></tr></table>
+  </center>
+  <![endif]-->

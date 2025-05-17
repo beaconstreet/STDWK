@@ -1,0 +1,10 @@
+# Environment variables
+.env
+
+# Asset files
+/assets/
+/output/
+/overlays/
+*.png
+
+#
