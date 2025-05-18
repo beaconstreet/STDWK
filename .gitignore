@@ -11,8 +11,11 @@
 # Environment variables
 .env
 
-# Other stuff
+# macOS system files
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
 
 # Build artifacts
 node_modules/

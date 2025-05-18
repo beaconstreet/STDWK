@@ -1,3 +1,5 @@
+# Defunct script for syncing social posts directly to Instagram.  Unable to work due to API restrictions for non-app-based access.
+
 import os
 import sys
 import json
