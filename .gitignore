@@ -1,0 +1,27 @@
+# Environment variables
+.env
+
+# CSV files
+events.csv
+events_update.csv
+events_update_newsletter.csv
+events_update_newsletter_2.csv
+InstagramSchedulerPrep.csv
+
+# Asset files
+**/assets/
+**/output/
+**/overlays/
+*.png
+*.csv
+
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Build artifacts
+node_modules/
+__pycache__/
