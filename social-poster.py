@@ -36,9 +36,6 @@ NETLIFY_BASE_URL = os.getenv("NETLIFY_BASE_URL", "https://jocular-peony-417429.n
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 os.makedirs(ASSETS_FOLDER, exist_ok=True)
 
-# Read the CSV file
-data = pd.read_csv(EVENTS_CSV)  # Changed from data.csv
-
 def run_newsletter_writer():
     """Run the newsletter-writer.py script"""
     try:
@@ -58,23 +55,39 @@ def run_newsletter_writer():
 def push_to_netlify(max_retries=3, retry_delay=5):
     """Push new images to Netlify via Git with confirmation and retry mechanism"""
     
-    # Check if there are any changes to push (both PNG and DOCX files)
+    # Check if there are any changes to push
     try:
-        status_png = subprocess.run(['git', 'status', '--porcelain', 'output/*.png'], 
-                              capture_output=True, text=True, check=True)
-        status_docx = subprocess.run(['git', 'status', '--porcelain', 'output/*_caption.docx'], 
-                               capture_output=True, text=True, check=True)
-        status_csv = subprocess.run(['git', 'status', '--porcelain', 'output/*.csv'], 
-                              capture_output=True, text=True, check=True)
-        status_assets = subprocess.run(['git', 'status', '--porcelain', 'assets/*'], 
-                                 capture_output=True, text=True, check=True)
+        # Get all untracked and modified files
+        status_result = subprocess.run(['git', 'status', '--porcelain'], 
+                                     capture_output=True, text=True, check=True)
         
-        if not (status_png.stdout.strip() or status_docx.stdout.strip() or 
-                status_csv.stdout.strip() or status_assets.stdout.strip()):
+        # Filter for files in output/ and assets/ folders
+        relevant_files = []
+        for line in status_result.stdout.strip().split('\n'):
+            if line.strip():  # Skip empty lines
+                # Extract filename (after the status code)
+                filename = line[3:].strip()
+                if (filename.startswith('output/') and 
+                    (filename.endswith('.png') or filename.endswith('.docx') or filename.endswith('.csv'))) or \
+                   filename.startswith('assets/'):
+                    relevant_files.append(line.strip())
+        
+        if not relevant_files:
             print("No new files to push to Netlify")
-            return True
-    except subprocess.CalledProcessError:
-        pass  # Continue if the check fails
+            return False  # Changed from True to False to indicate no push occurred
+            
+        # Show what files will be pushed
+        print("\n" + "="*60)
+        print("NETLIFY PUSH PREPARATION")
+        print("="*60)
+        print("The following files will be pushed to Netlify:")
+        for file_line in relevant_files:
+            print(f"  {file_line}")
+        print("="*60)
+        
+    except subprocess.CalledProcessError as e:
+        print(f"Error checking git status: {e}")
+        return False
 
     # Ask for confirmation
     questions = [
@@ -87,6 +100,16 @@ def push_to_netlify(max_retries=3, retry_delay=5):
         print("Skipping Netlify push. Remember to push the files manually!")
         return False
 
+    # Additional confirmation before actual push
+    print("\n⚠️  FINAL CONFIRMATION ⚠️")
+    print("This will commit and push files to the live Netlify site.")
+    
+    final_confirmation = input("Type 'PUSH' to continue or anything else to cancel: ").strip()
+    
+    if final_confirmation != 'PUSH':
+        print("Push cancelled by user.")
+        return False
+
     for attempt in range(max_retries):
         try:
             if attempt > 0:
@@ -95,8 +118,7 @@ def push_to_netlify(max_retries=3, retry_delay=5):
 
             # Add all new files in the output and assets folders
             print("Adding new files to Git...")
-            subprocess.run(['git', 'add', 'output/*.png', 'output/*_caption.docx', 
-                           'output/*.csv', 'assets/*'], check=True)
+            subprocess.run(['git', 'add', 'output/', 'assets/'], check=True)
             
             # Show what's being committed
             print("\nFiles to be committed:")
@@ -569,14 +591,17 @@ def main():
         create_updated_events_csv(updated_rows)
         
         # Push to Netlify (and potentially run newsletter writer)
-        if push_to_netlify():
+        push_result = push_to_netlify()
+        if push_result:
             print("\n🎉 Process completed successfully!")
-            print("Files have been pushed to Netlify")
+            print("Files have been pushed to Netlify and/or newsletter writer was run")
             print(f"Scheduler CSV created in InstagramSchedulerPrep.csv")
             print(f"Updated events CSV created in events_update.csv")
         else:
-            print("\n⚠️  Warning: Images were created but not pushed to Netlify")
-            print("Please push the images manually")
+            print("\n⚠️  Process completed but files were not pushed to Netlify")
+            print("Files are ready for manual push if needed")
+            print(f"Scheduler CSV created in InstagramSchedulerPrep.csv")
+            print(f"Updated events CSV created in events_update.csv")
             
     except Exception as e:
         logger.error(f"Error in main process: {e}")

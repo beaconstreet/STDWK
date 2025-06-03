@@ -10,9 +10,9 @@ InstagramSchedulerPrep.csv
 
 # Asset files
 **/assets/
-**/output/
+# **/output/
 **/overlays/
-*.png
+# *.png
 *.csv
 
 
