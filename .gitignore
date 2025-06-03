@@ -1,7 +1,7 @@
 # Environment variables
 .env
 
-# CSV files
+# CSV files (keep these specific ones ignored)
 events.csv
 events_update.csv
 events_update_newsletter.csv
@@ -10,11 +10,14 @@ InstagramSchedulerPrep.csv
 
 # Asset files
 **/assets/
-# **/output/
 **/overlays/
-# *.png
-*.csv
 
+# Allow PNG files in output folder, ignore elsewhere
+*.png
+!output/*.png
+
+# Ignore CSV files everywhere (already handled above)
+*.csv
 
 # macOS system files
 .DS_Store
